@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 import static com.codeborne.selenide.Selenide.$;
 import static java.lang.String.format;
 
-public class ResultsCollection {
+public class ResultsCollectionElement extends BaseElement implements IResultsCollectionElement {
 
     private final List<SelenideElement> elements;
 
-    public ResultsCollection(String selector){
+    public ResultsCollectionElement(String selector){
         SelenideElement rootElement = $(format("[data-qa-selector='%s']", selector));
         elements = rootElement.$$x("./div");
     }

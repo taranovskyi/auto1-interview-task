@@ -1,34 +1,34 @@
 package com.autohero.scenarios;
 
-import com.autohero.common.BaseTest;
-import com.autohero.pages.MainPage;
 import com.autohero.pages.SearchPage;
-import com.google.common.collect.Ordering;
-import org.junit.jupiter.api.Test;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.codeborne.selenide.Selenide.open;
 
+@ExtendWith(SoftAssertionsExtension.class)
 public class SearchTest extends BaseTest {
 
-    @Test
-    void yearFilterAndSortingShouldFilterSearchResults() {
-        MainPage mainPage = new MainPage();
-        SearchPage searchPage = mainPage.goToSearchPage();
-        int year = 2015;
+    @ParameterizedTest
+    @CsvSource({"2015, 'Höchster Preis'"})
+    void yearFilterAndSortingShouldFilterSearchResults(int year, String sortBy, SoftAssertions softly) {
+        SearchPage searchPage = open("/search", SearchPage.class);
 
         searchPage
                 .SelectYearFilter(year)
-                .SortResultsBy("Höchster Preis");
+                .SortResultsBy(sortBy);
 
         List<LocalDate> carsRegistrationDate = searchPage.getCarsRegistrationDates();
         List<Float> carsPrices = searchPage.getCarsPrices();
 
-        assertTrue(Ordering.natural().reverse().isOrdered(carsPrices),
-                "Car prices are not sorted in Descending order!");
-        assertTrue(carsRegistrationDate.stream().allMatch(date -> date.getYear() > year - 1),
-                String.format("Car registration dates are not filtered after %d year", year));
+        softly.assertThat(carsPrices).isSortedAccordingTo(Comparator.reverseOrder());
+        softly.assertThat(carsRegistrationDate.stream().allMatch(date -> date.getYear() > year - 1)).isTrue();
     }
 }

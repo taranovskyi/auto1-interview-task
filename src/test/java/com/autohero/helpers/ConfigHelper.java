@@ -20,4 +20,8 @@ public class ConfigHelper {
             }
         }
     }
+
+    public static int getDefaultSelenideTimeout(){
+        return Integer.parseInt(System.getProperty("selenide.timeout"));
+    }
 }

@@ -1,9 +1,7 @@
 package com.autohero.pages;
 
-import com.autohero.common.BasePage;
-import com.autohero.elements.ResultsCollection;
+import com.autohero.elements.ResultsCollectionElement;
 import com.autohero.elements.SelectElement;
-import com.autohero.helpers.WebDriverProvider;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
@@ -20,13 +18,9 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class SearchPage extends BasePage {
 
-    public SearchPage(){
-        WebDriverProvider.waitForPageLoad();
-    }
-
     private final SelectElement yearFilterElement = new SelectElement("yearRange.min");
     private final SelectElement sortByElement = new SelectElement("sort");
-    private final ResultsCollection resultsListElement = new ResultsCollection("ad-items");
+    private final ResultsCollectionElement resultsListElement = new ResultsCollectionElement("ad-items");
     private final SelenideElement filterYearElement = $("[data-qa-selector='filter-year']");
 
     private static LocalDate parseRegistrationDate(String registration) {

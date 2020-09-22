@@ -1,4 +1,4 @@
-package com.autohero.common;
+package com.autohero.pages;
 
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.impl.SelenidePageFactory;

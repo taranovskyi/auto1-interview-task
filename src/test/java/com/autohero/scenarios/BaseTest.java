@@ -1,6 +1,7 @@
-package com.autohero.common;
+package com.autohero.scenarios;
 
 import com.autohero.helpers.ConfigHelper;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
